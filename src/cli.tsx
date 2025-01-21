@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import meow from 'meow'
-import MatrixRain from './matrix.js'
+import MatrixRain from './matrix-rain.js'
 
 const cli = meow(
   `
@@ -11,11 +11,13 @@ const cli = meow(
     --direction, -d   Direction of rain (vertical or horizontal) [Default: vertical]
     --charset, -c     Character set to use (ascii, binary, braille, emoji, katakana) [Default: ascii]
     --color          Text color (green, red, blue, yellow, magenta, cyan, white) [Default: green]
+    --density        Drop density, 0.0-1.0 (more drops = fewer gaps) [Default: 1.0]
 
   Examples
     $ matrix-rain
     $ matrix-rain --direction horizontal
     $ matrix-rain --charset katakana --color cyan
+    $ matrix-rain --density 0.5  # Half density, more gaps
 `,
   {
     importMeta: import.meta,
@@ -33,6 +35,10 @@ const cli = meow(
       color: {
         type: 'string',
         default: 'green'
+      },
+      density: {
+        type: 'number',
+        default: 1.0
       }
     }
   }
@@ -56,11 +62,18 @@ if (cli.flags.color && !['black', 'red', 'green', 'yellow', 'blue', 'magenta', '
   process.exit(1)
 }
 
+// Validate density
+if (cli.flags.density !== undefined && (cli.flags.density < 0 || cli.flags.density > 1)) {
+  console.error('Error: density must be between 0.0 and 1.0')
+  process.exit(1)
+}
+
 // Start the matrix rain
 const matrix = new MatrixRain({
   direction: cli.flags.direction as 'vertical' | 'horizontal',
   charset: cli.flags.charset as 'ascii' | 'binary' | 'braille' | 'emoji' | 'katakana',
-  color: cli.flags.color
+  color: cli.flags.color,
+  density: cli.flags.density
 })
 
 // Handle cleanup on exit
