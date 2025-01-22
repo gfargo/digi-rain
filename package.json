@@ -1,7 +1,7 @@
 {
-  "name": "ink-starter",
+  "name": "matrinks-rain",
   "version": "0.0.0",
-  "description": "A starter project for building CLI applications with Ink",
+  "description": "A digital rain effect for your terminal inspired by the unforgettable classic, The Matrix",
   "author": "gfargo <ghfargo@gmail.com>",
   "license": "MIT",
   "bin": "dist/cli.js",
@@ -9,6 +9,39 @@
   "engines": {
     "node": ">=16"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gfargo/matrinks-rain.git"
+  },
+  "keywords": [
+    "terminal",
+    "matrix",
+    "digital",
+    "rain",
+    "effect",
+    "animation",
+    "console",
+    "ink",
+    "katakana",
+    "ascii-art",
+    "terminal-graphics"
+  ],
+  "bugs": {
+    "url": "https://github.com/gfargo/matrinks-rain/issues"
+  },
+  "homepage": "https://github.com/gfargo/matrinks-rain#readme",
+  "man": "./README.md",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/gfargo"
+  },
+  "contributors": [
+    {
+      "name": "Griffen Fargo",
+      "email": "ghfargo@gmail.com",
+      "url": "https://github.com/gfargo"
+    }
+  ],
   "scripts": {
     "start": "node dist/cli.js",
     "build": "tsc",
