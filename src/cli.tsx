@@ -34,11 +34,11 @@ const cli = meow(
       },
       color: {
         type: 'string',
-        default: 'green'
+        default: 'yellow'
       },
       density: {
         type: 'number',
-        default: 1.0
+        default: 0.15
       }
     }
   }
