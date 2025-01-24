@@ -27,5 +27,5 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["src"]
+  "include": ["src", "src/test/digital-rain.test.ts"]
 }

@@ -1,21 +1,25 @@
-# 🌧 Matrinks Rain
+# 🌧 Digi Rain
 
-Transform your terminal into the iconic Matrix digital rain effect. A highly customizable animation built with TypeScript and Chalk.
+Transform your terminal into the iconic Matrix digital rain effect. A high-performance animation built with TypeScript and optimized for smooth rendering.
 
-[![npm version](https://badge.fury.io/js/matrinks-rain.svg)](https://www.npmjs.com/package/matrinks-rain)
+[![npm version](https://badge.fury.io/js/digi-rain.svg)](https://www.npmjs.com/package/digi-rain)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+> Built for performance: Direct terminal manipulation for smooth 60+ FPS animation
 
 ## Quick Start
 
 Run instantly with npx:
+
 ```bash
-npx matrinks-rain
+npx digi-rain
 ```
 
 Or install globally for repeated use:
+
 ```bash
-npm install -g matrinks-rain
-matrix-rain
+npm install -g digi-rain
+digi-rain
 ```
 
 ## Features
@@ -32,45 +36,49 @@ matrix-rain
 Customize your rain effect using these command-line flags:
 
 ### `--direction, -d`
+
 - Controls the direction of the rain effect
 - Options: `vertical`, `horizontal`
 - Default: `vertical`
-- Example: `matrix-rain --direction horizontal`
+- Example: `digi-rain --direction horizontal`
 
 ### `--charset, -c`
+
 - Sets the character set used for the rain drops
 - Options: `ascii`, `binary`, `braille`, `emoji`, `katakana`
 - Default: `ascii`
-- Example: `matrix-rain --charset katakana`
+- Example: `digi-rain --charset katakana`
 
 ### `--color`
+
 - Changes the color of the rain effect
 - Options: `black`, `red`, `green`, `yellow`, `blue`, `magenta`, `cyan`, `white`
 - Default: `green`
-- Example: `matrix-rain --color cyan`
+- Example: `digi-rain --color cyan`
 
 ### `--density`
+
 - Controls how dense the rain appears (affects number of gaps)
 - Range: `0.0` to `1.0` (higher values = fewer gaps)
 - Default: `1.0`
-- Example: `matrix-rain --density 0.5`
+- Example: `digi-rain --density 0.5`
 
 ### Combined Examples
 
-Create your perfect Matrix rain by combining multiple parameters:
+Create your perfect digital rain by combining multiple parameters:
 
 ```bash
 # Horizontal cyan katakana characters
-matrix-rain --direction horizontal --charset katakana --color cyan
+digi-rain --direction horizontal --charset katakana --color cyan
 
 # Sparse purple binary rain
-matrix-rain --charset binary --color magenta --density 0.3
+digi-rain --charset binary --color magenta --density 0.3
 
 # Dense emoji rain in yellow
-matrix-rain --charset emoji --color yellow --density 1.0
+digi-rain --charset emoji --color yellow --density 1.0
 
 # Horizontal braille characters in blue with medium density
-matrix-rain -d horizontal -c braille --color blue --density 0.7
+digi-rain -d horizontal -c braille --color blue --density 0.7
 ```
 
 ## Interactive Controls
@@ -87,6 +95,104 @@ While the animation is running, you can use the following keyboard controls:
 | `r` | Switch to rainbow theme |
 | `q` | Quit the animation |
 
+## Using DigitalRain in Your Project
+
+You can integrate the DigitalRain effect into your own Node.js applications. Here's how:
+
+### Installation
+
+```bash
+npm install digi-rain
+```
+
+### Basic Integration
+
+```typescript
+import { DigitalRain } from 'digi-rain';
+
+// Create with default settings
+const rain = new DigitalRain({});
+
+// Start the animation
+rain.start();
+
+// Clean up when your app exits
+process.on('SIGINT', () => {
+  rain.stop();
+  process.exit();
+});
+```
+
+### Custom Configuration
+
+```typescript
+const rain = new DigitalRain({
+  // Choose your character set
+  charset: 'katakana',
+  
+  // Set the direction
+  direction: 'horizontal',
+  
+  // Pick a color theme
+  color: 'blue',
+  
+  // Adjust the density (0.0 to 1.0)
+  density: 0.8
+});
+```
+
+### Handling Terminal Resizing
+
+The DigitalRain effect automatically handles terminal resizing, but you can also manually trigger a resize:
+
+```typescript
+process.stdout.on('resize', () => {
+  // Optional: Add your own resize handling
+  rain.handleResize();
+});
+```
+
+### Cleanup
+
+Always stop the animation when you're done to restore the terminal state:
+
+```typescript
+// In your cleanup code
+rain.stop();
+```
+
+### Example: Adding to a CLI App
+
+```typescript
+#!/usr/bin/env node
+import { DigitalRain } from 'digi-rain';
+
+// Parse your CLI arguments
+const args = process.argv.slice(2);
+
+// Create rain with custom settings
+const rain = new DigitalRain({
+  charset: args.includes('--katakana') ? 'katakana' : 'ascii',
+  color: args.includes('--blue') ? 'blue' : 'green'
+});
+
+// Start the effect
+rain.start();
+
+// Handle cleanup
+process.on('SIGINT', () => {
+  rain.stop();
+  process.exit();
+});
+
+// Optional: Stop after a timeout
+if (args.includes('--timeout')) {
+  setTimeout(() => {
+    rain.stop();
+    process.exit();
+  }, 5000); // Stop after 5 seconds
+}
+```
 
 ## Contributing
 
@@ -99,5 +205,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 - Inspired by the iconic digital rain effect from The Matrix
-- Built with [Chalk](https://github.com/chalk/chalk) for terminal styling
+- Built with direct terminal manipulation for maximum performance
+- Uses [Chalk](https://github.com/chalk/chalk) for color support
 - Uses [node-emoji](https://github.com/omnidan/node-emoji) for emoji support
+- Special thanks to the cyberpunk genre for endless inspiration

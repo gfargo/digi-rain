@@ -16,14 +16,14 @@ interface Cell {
   intensity: number
 }
 
-interface MatrixConfig {
+interface DigitalRainConfig {
   direction?: 'vertical' | 'horizontal'
   charset?: 'ascii' | 'binary' | 'braille' | 'emoji' | 'katakana'
   color?: string
   density?: number // 0-1, controls gap frequency, default 1 (no gaps)
 }
 
-class MatrixRain {
+class DigitalRain {
   private drops: Droplet[] = []
   private columns: number = 0
   private rows: number = 0
@@ -86,7 +86,7 @@ class MatrixRain {
   private intervalId?: NodeJS.Timeout
   private isRunning: boolean = false
 
-  constructor(config: MatrixConfig) {
+  constructor(config: DigitalRainConfig) {
     this.charset = config.charset || 'ascii'
     this.direction = config.direction || 'vertical'
     this.density = config.density ?? 1.0 // Default to full density
@@ -421,4 +421,4 @@ class MatrixRain {
   }
 }
 
-export default MatrixRain
+export default DigitalRain
