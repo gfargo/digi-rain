@@ -135,10 +135,6 @@ const App = ({
       const newRows = stdout.rows || 0
       setColumns(newColumns)
       setRows(newRows)
-
-      console.log('newColumns:', newColumns)
-      console.log('newRows:', newRows)
-
       // Initialize drops based on direction
       const numDrops = direction === 'vertical' ? newColumns : newRows
       const maxPos = direction === 'vertical' ? newRows : newColumns
