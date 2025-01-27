@@ -10,7 +10,7 @@ const cli = meow(
   Options
     --direction, -d   Direction of rain (vertical or horizontal) [Default: vertical]
     --charset, -c     Character set to use (ascii, binary, braille, emoji, katakana) [Default: ascii]
-    --color          Text color (green, red, blue, yellow, magenta, cyan, white) [Default: green]
+    --color          Text color (green, red, blue, yellow, purple, pink, cyan, white, alien, ocean, sunset) [Default: green]
     --density        Drop density, 0.0-1.0 (more drops = fewer gaps) [Default: 1.0]
 
   Examples
