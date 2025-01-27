@@ -494,7 +494,7 @@ class DigitalRain {
     // Display controls
     process.stdout.write(
       `\x1b[${this.rows};1H${chalk.bold.white(
-        'Press 1-5 to change charset, v/h for direction, g/b/p/r for colors, q to quit'
+        'Press 1-5 to change charset, v/h for direction, g/b/p/m/r/y/c/w/s/a/o for color, q to quit'
       )}`
     )
   }
