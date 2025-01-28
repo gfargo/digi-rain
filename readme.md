@@ -24,7 +24,7 @@ digi-rain
 
 ## Features
 
-- 🎨 Multiple color themes (green, blue, purple, rainbow)
+- 🎨 Tons of color themes!! ('green', 'blue', 'purple', 'pink', 'yellow', 'cyan', 'red', 'white', 'sunset', 'alien', 'ocean', 'forest', 'fire', 'galaxy', 'pastel', 'neon', 'lava', 'ice', 'earthy' )
 - 📝 Various character sets (ASCII, Binary, Braille, Emoji, Katakana)
 - ↕️ Vertical and horizontal rain directions
 - 🎚️ Adjustable density and speed
@@ -89,10 +89,7 @@ While the animation is running, you can use the following keyboard controls:
 |-----|--------|
 | `1-5` | Switch character sets (1:ASCII, 2:Binary, 3:Braille, 4:Emoji, 5:Katakana) |
 | `v/h` | Toggle between vertical and horizontal directions |
-| `g` | Switch to green theme |
-| `b` | Switch to blue theme |
-| `p` | Switch to purple theme |
-| `r` | Switch to rainbow theme |
+| `↑/↓` | Switch to between color themes |
 | `q` | Quit the animation |
 
 ## Using DigitalRain in Your Project
