@@ -19,9 +19,155 @@ interface Cell {
 interface DigitalRainConfig {
   direction?: 'vertical' | 'horizontal'
   charset?: 'ascii' | 'binary' | 'braille' | 'emoji' | 'katakana'
-  color?: string
+  color?: ColorPaletteNameEnum
   density?: number // 0-1, controls gap frequency, default 1 (no gaps)
 }
+
+// Store palette names in an array
+const paletteNames = [
+  'green',
+  'blue',
+  'purple',
+  'pink',
+  'yellow',
+  'cyan',
+  'red',
+  'white',
+  'sunset',
+  'alien',
+  'ocean',
+  'forest',
+  'fire',
+  'galaxy',
+  'pastel',
+  'neon',
+  'lava',
+  'ice',
+  'earthy',
+]
+
+const PALETTE_DICT = {
+  green: {
+    head: chalk.bold.white,
+    bright: chalk.bold.green,
+    medium: chalk.green,
+    dim: chalk.rgb(0, 100, 0),
+  },
+  blue: {
+    head: chalk.bold.white,
+    bright: chalk.bold.blue,
+    medium: chalk.blue,
+    dim: chalk.rgb(0, 0, 100),
+  },
+  purple: {
+    head: chalk.bold.white,
+    bright: chalk.bold.magenta,
+    medium: chalk.magenta,
+    dim: chalk.rgb(100, 0, 100),
+  },
+  yellow: {
+    head: chalk.bold.black,
+    bright: chalk.bold.yellow,
+    medium: chalk.yellow,
+    dim: chalk.rgb(100, 100, 0),
+  },
+  cyan: {
+    head: chalk.bold.white,
+    bright: chalk.bold.cyan,
+    medium: chalk.cyan,
+    dim: chalk.rgb(0, 100, 100),
+  },
+  red: {
+    head: chalk.bold.white,
+    bright: chalk.bold.red,
+    medium: chalk.red,
+    dim: chalk.rgb(100, 0, 0),
+  },
+  pink: {
+    head: chalk.bold.white,
+    bright: chalk.bold.hex('#ff00ff'),
+    medium: chalk.hex('#ff77ff'),
+    dim: chalk.hex('#ffddff'),
+  },
+  white: {
+    head: chalk.bold.black,
+    bright: chalk.bold.white,
+    medium: chalk.white,
+    dim: chalk.rgb(100, 100, 100),
+  },
+  // Sunset palette - red and orange
+  sunset: {
+    head: chalk.bold.white,
+    bright: chalk.bold.hex('#ff0000'),
+    medium: chalk.hex('#ff7700'),
+    dim: chalk.hex('#ffdd00'),
+  },
+  // Alien palette - purple and green
+  alien: {
+    head: chalk.bold.white,
+    bright: chalk.bold.hex('#00ff00'),
+    medium: chalk.green,
+    dim: chalk.hex('#7700ff'),
+  },
+  // Ocean palette - blue and cyan
+  ocean: {
+    head: chalk.bold.white,
+    bright: chalk.bold.hex('#00ffff'),
+    medium: chalk.cyan,
+    dim: chalk.hex('#0077ff'),
+  },
+  // New palettes
+  forest: {
+    head: chalk.bold.white,
+    bright: chalk.bold.hex('#228B22'), // Forest green
+    medium: chalk.hex('#2E8B57'), // Sea green
+    dim: chalk.hex('#556B2F'), // Dark olive green
+  },
+  fire: {
+    head: chalk.bold.white,
+    bright: chalk.bold.hex('#FF4500'), // Orange red
+    medium: chalk.hex('#FF6347'), // Tomato
+    dim: chalk.hex('#CD5C5C'), // Indian red
+  },
+  galaxy: {
+    head: chalk.bold.white,
+    bright: chalk.bold.hex('#9400D3'), // Dark violet
+    medium: chalk.hex('#4B0082'), // Indigo
+    dim: chalk.hex('#2F4F4F'), // Dark slate gray
+  },
+  pastel: {
+    head: chalk.bold.black,
+    bright: chalk.bold.hex('#FFD1DC'), // Pastel pink
+    medium: chalk.hex('#AEC6CF'), // Pastel blue
+    dim: chalk.hex('#FFB347'), // Pastel orange
+  },
+  neon: {
+    head: chalk.bold.white,
+    bright: chalk.bold.hex('#39FF14'), // Neon green
+    medium: chalk.hex('#FF1493'), // Deep pink
+    dim: chalk.hex('#1E90FF'), // Neon blue
+  },
+  lava: {
+    head: chalk.bold.white,
+    bright: chalk.bold.hex('#FF8C00'), // Dark orange
+    medium: chalk.hex('#FF4500'), // Orange red
+    dim: chalk.hex('#8B0000'), // Dark red
+  },
+  ice: {
+    head: chalk.bold.white,
+    bright: chalk.bold.hex('#00FFFF'), // Aqua
+    medium: chalk.hex('#ADD8E6'), // Light blue
+    dim: chalk.hex('#E0FFFF'), // Light cyan
+  },
+  earthy: {
+    head: chalk.bold.white,
+    bright: chalk.bold.hex('#8B4513'), // Saddle brown
+    medium: chalk.hex('#A0522D'), // Sienna
+    dim: chalk.hex('#DEB887'), // Burlywood
+  },
+}
+
+export type ColorPaletteNameEnum = keyof typeof PALETTE_DICT
 
 class DigitalRain {
   private drops: Droplet[] = []
@@ -30,79 +176,10 @@ class DigitalRain {
   private charset: string
   private direction: 'vertical' | 'horizontal'
   // Color palettes
-  private palettes = {
-    green: {
-      head: chalk.bold.white,
-      bright: chalk.bold.green,
-      medium: chalk.green,
-      dim: chalk.rgb(0, 100, 0),
-    },
-    blue: {
-      head: chalk.bold.white,
-      bright: chalk.bold.blue,
-      medium: chalk.blue,
-      dim: chalk.rgb(0, 0, 100),
-    },
-    purple: {
-      head: chalk.bold.white,
-      bright: chalk.bold.magenta,
-      medium: chalk.magenta,
-      dim: chalk.rgb(100, 0, 100),
-    },
-    yellow: {
-      head: chalk.bold.black,
-      bright: chalk.bold.yellow,
-      medium: chalk.yellow,
-      dim: chalk.rgb(100, 100, 0),
-    },
-    cyan: {
-      head: chalk.bold.white,
-      bright: chalk.bold.cyan,
-      medium: chalk.cyan,
-      dim: chalk.rgb(0, 100, 100),
-    },
-    red: {
-      head: chalk.bold.white,
-      bright: chalk.bold.red,
-      medium: chalk.red,
-      dim: chalk.rgb(100, 0, 0),
-    },
-    pink: {
-      head: chalk.bold.white,
-      bright: chalk.bold.hex('#ff00ff'),
-      medium: chalk.hex('#ff77ff'),
-      dim: chalk.hex('#ffddff'),
-    },
-    white: {
-      head: chalk.bold.black,
-      bright: chalk.bold.white,
-      medium: chalk.white,
-      dim: chalk.rgb(100, 100, 100),
-    },
-    // Sunset palette - red and orange
-    sunset: {
-      head: chalk.bold.white,
-      bright: chalk.bold.hex('#ff0000'),
-      medium: chalk.hex('#ff7700'),
-      dim: chalk.hex('#ffdd00'),
-    },
-    // Alien palette - purple and green
-    alien: {
-      head: chalk.bold.white,
-      bright: chalk.bold.hex('#00ff00'),
-      medium: chalk.green,
-      dim: chalk.hex('#7700ff'),
-    },
-    // Ocean palette - blue and cyan
-    ocean: {
-      head: chalk.bold.white,
-      bright: chalk.bold.hex('#00ffff'),
-      medium: chalk.cyan,
-      dim: chalk.hex('#0077ff'),
-    },
-  }
+  private palettes = PALETTE_DICT
 
-  private currentPalette: keyof typeof this.palettes = 'green'
+  private currentPalette: ColorPaletteNameEnum = 'green'
+  private currentPaletteIndex: number = 0
   private density: number
   private intervalId?: NodeJS.Timeout
   private isRunning: boolean = false
@@ -111,8 +188,7 @@ class DigitalRain {
     this.charset = config.charset || 'ascii'
     this.direction = config.direction || 'vertical'
     this.density = config.density ?? 1.0 // Default to full density
-    this.currentPalette = (config.color ||
-      'green') as keyof typeof this.palettes
+    this.currentPalette = (config.color || 'green') as ColorPaletteNameEnum
 
     // Set up input handling
     readline.emitKeypressEvents(process.stdin)
@@ -165,40 +241,24 @@ class DigitalRain {
               this.handleResize() // Reset drops for new direction
             }
             break
-          // Color switching
-          case 'g':
-            this.currentPalette = 'green'
-            break
-          case 'b':
-            this.currentPalette = 'blue'
-            break
-          case 'p':
-            this.currentPalette = 'purple'
-            break
-          case 'm':
-            this.currentPalette = 'pink'
-            break
-          case 'y':
-            this.currentPalette = 'yellow'
-            break
-          case 'c':
-            this.currentPalette = 'cyan'
-            break
-          case 'r':
-            this.currentPalette = 'red'
-            break
-          case 'w':
-            this.currentPalette = 'white'
-            break
-          case 's':
-            this.currentPalette = 'sunset'
-            break
-          case 'a':
-            this.currentPalette = 'alien'
-            break
-          case 'o':
-            this.currentPalette = 'ocean'
-            break
+        }
+
+        // Palette switching with arrow keys
+        if (key?.name === 'up') {
+          this.currentPaletteIndex =
+            (this.currentPaletteIndex - 1 + paletteNames.length) %
+            paletteNames.length
+          this.currentPalette = paletteNames[
+            this.currentPaletteIndex
+          ] as ColorPaletteNameEnum
+          // console.log(`Switched to palette: ${this.currentPalette}`)
+        } else if (key?.name === 'down') {
+          this.currentPaletteIndex =
+            (this.currentPaletteIndex + 1) % paletteNames.length
+          this.currentPalette = paletteNames[
+            this.currentPaletteIndex
+          ] as ColorPaletteNameEnum
+          // console.log(`Switched to palette: ${this.currentPalette}`)
         }
       }
     )
@@ -493,9 +553,15 @@ class DigitalRain {
 
     // Display controls
     process.stdout.write(
-      `\x1b[${this.rows};1H${chalk.bold.white(
-        'Press 1-5 to change charset, v/h for direction, g/b/p/m/r/y/c/w/s/a/o for color, q to quit'
-      )}`
+      `\x1b[${this.rows};1H${chalk.bold.white('Press ')}${chalk.bold.cyan(
+        '1-5'
+      )}${chalk.white(' to change charset, ')}${chalk.bold.cyan(
+        'v/h'
+      )}${chalk.white(' for direction, ')}${chalk.bold.green(
+        '↑/↓'
+      )}${chalk.white(' for color scheme, ')}${chalk.bold.red(
+        'q'
+      )}${chalk.white(' to quit')}`
     )
   }
 

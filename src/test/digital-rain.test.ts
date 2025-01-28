@@ -1,7 +1,7 @@
 import test from 'ava'
 import { PassThrough } from 'stream'
 import type { WriteStream } from 'tty'
-import DigitalRain from '../digital-rain.js'
+import DigitalRain, { ColorPaletteNameEnum } from '../digital-rain.js'
 
 // Create mock stdout using PassThrough stream with additional properties
 const mockStdout = new PassThrough() as PassThrough & Partial<WriteStream>
@@ -34,7 +34,7 @@ test('DigitalRain configuration', (t) => {
   const config = {
     direction: 'horizontal' as const,
     charset: 'katakana' as const,
-    color: 'blue',
+    color: 'blue' as ColorPaletteNameEnum,
     density: 0.5,
   }
 

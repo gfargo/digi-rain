@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import meow from 'meow'
-import DigitalRain from './digital-rain.js'
+import DigitalRain, { ColorPaletteNameEnum } from './digital-rain.js'
 
 const cli = meow(
   `
@@ -72,7 +72,7 @@ if (cli.flags.density !== undefined && (cli.flags.density < 0 || cli.flags.densi
 const matrix = new DigitalRain({
   direction: cli.flags.direction as 'vertical' | 'horizontal',
   charset: cli.flags.charset as 'ascii' | 'binary' | 'braille' | 'emoji' | 'katakana',
-  color: cli.flags.color,
+  color: cli.flags.color as ColorPaletteNameEnum,
   density: cli.flags.density
 })
 
